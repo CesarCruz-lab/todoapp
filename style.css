@@ -37,6 +37,8 @@ header {
 	margin: 15px 0;
 }
 
+/* input e icones */
+
 .input-field {
 	position: relative;
 	display: flex;
@@ -71,6 +73,8 @@ header {
 	width: 15px;
 	filter: invert(1);
 }
+
+/* lista de tarefas */
 
 .todolist li {
 	position: relative;
@@ -117,7 +121,6 @@ header {
 }
 
 .btn-new-task {
-	/* transform: scale(0.85); */
 	background: #11c58a;
 	box-shadow: 0 0 0 1px #11c58a;
 }
@@ -141,7 +144,6 @@ header {
 .btn-new-task:active,
 .btn-clear-all:active,
 .btn-delete:active {
-	/* transform: scale(0.85); */
 	box-shadow: 0 0 0 0;
 	opacity: 0.35 !important;
 }
