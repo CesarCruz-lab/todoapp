@@ -119,6 +119,19 @@ return tasks.map(({id, content, created, pending}) => {
 	}).join('')
 }
 
+function pendingTasks(tasks) {
+	infoEl.textContent = tasks.filter(({pending}) => {
+		return pending
+	}).length
+}
+
+function changePending(inputCheckEl, ID) {
+	const task = todoApp.tasks.filter(({id}) => id === ID)[0]
+	task.pending = !inputCheckEl.checked
+	pendingTasks(todoApp.tasks)
+	updateLocalStorage()
+}
+
 function addTasksAndInfoInToDOM() {
 	const {tasks, reverse} = todoApp
 	
@@ -128,7 +141,6 @@ function addTasksAndInfoInToDOM() {
 	const template = 
 		generateTemplateForTasks(allTasks)
 	
-	infoEl.textContent = tasks.length
 	
 	if (tasks.length == 0) {
 		todolistEl.innerHTML = `
@@ -137,6 +149,7 @@ function addTasksAndInfoInToDOM() {
 		return
 	}
 	
+	pendingTasks(allTasks)
 	todolistEl.innerHTML = template
 }
 
@@ -220,12 +233,6 @@ function clearAll() {
 	todoApp.tasks = []
 	todoApp.currentId = 0
 	update()
-}
-
-function changePending(inputRadioEl, ID) {
-	const task = todoApp.tasks.filter(({id}) => id === ID)[0]
-	task.pending = !inputRadioEl.checked
-	updateLocalStorage()
 }
 
 
