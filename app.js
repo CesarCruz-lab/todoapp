@@ -73,12 +73,12 @@ let todoApp = {
 
 // local storage
 
-const getLocalStorage = () => {
+function getLocalStorage() {
 	const data = localStorage.getItem('todo-app')
 	if (!(data === null)) { todoApp = JSON.parse(data) }
 }
 
-const updateLocalStorage = () => {
+function updateLocalStorage() {
 	const data = JSON.stringify(todoApp)
 	localStorage.setItem('todo-app', data)
 }
@@ -86,34 +86,44 @@ const updateLocalStorage = () => {
 
 // visualização
 
-const generateTemplateForTasks = tasks => {
-	return tasks.map(({id, content, created}) => {
-		const {date, time} = created
+function generateTemplateForTasks(tasks) {
+return tasks.map(({id, content, created, pending}) => {
+	const {date, time} = created
+	
+	const inputCheck = `
+		<input 
+			type="checkbox"
+			name="task"
+			id="radio-${id}"
+			onInput="changePending(this, ${id})"
+			${pending ? '' : 'checked'}
+		/>
+		<label for="radio-${id}" class="check"></label>
+	`
+	
 		return `
 			<li>
-				<span class="content">${content}</span>
-				<span class="date">${date} - ${time}</span>
+				${inputCheck}
+				<div class="content-box">
+					<span class="content">${content}</span>
+					<span class="date">${date} - ${time}</span>
 				<button
 					class="btn btn-delete"
 					onClick="deleteTask(${id})"
 				>
 					<img class="icon" src="img/trash.svg" alt="icon">
 				</button>
+				</div>
 			</li>
 		`
 	}).join('')
 }
 
-const addTasksAndInfoInToDOM = () => {
+function addTasksAndInfoInToDOM() {
 	const {tasks, reverse} = todoApp
 	
-	let allTasks
-	
-	if (reverse) {
-		allTasks = tasks.slice().reverse()
-	} else {
-		allTasks = tasks
-	}
+	const allTasks = reverse ? 
+		tasks.slice().reverse() : tasks
 	
 	const template = 
 		generateTemplateForTasks(allTasks)
@@ -133,36 +143,33 @@ const addTasksAndInfoInToDOM = () => {
 
 // atualização informações
 
-const update = () => {
+function update() {
 	inputEl.value = ''
 	todoApp.currentId++
 	updateLocalStorage()
 	addTasksAndInfoInToDOM()
 }
 
+
 // ordem dos itens
 
-
-const ordering = event => {
+function ordering(event) {
 	const {id} = event.target
 	todoApp.reverse = id === 'reverse' ? true : false
 	update()
 }
 
-const checkOrder = () => {
+function checkOrder() {
 	radioEls.forEach(radioEl => {
-		if (radioEl.id === 'reverse') {
-			radioEl.checked = todoApp.reverse
-		} else {
-			radioEl.checked = !todoApp.reverse
-		}
+		radioEl.checked = radioEl.id === 'reverse' ?
+			todoApp.reverse : !todoApp.reverse
 	})
 }
 
 
 // controle de tarefas
 
-const createTask = () => {
+function createTask() {
 	const {currentId} = todoApp
 	const content = inputEl.value.trim()
 	
@@ -187,9 +194,10 @@ const createTask = () => {
 		content: content,
 		created: {
 			date: 
-			`${dayName}, ${monthName} ${dayNumber}, ${fullYear}`,
+			`${dayName}, ${monthName} ${dayNumber} ${fullYear}`,
 			time: `${hh}:${mm}`
-		}
+		},
+		pending: true
 	}
 	
 	todoApp.tasks.push(task)
@@ -199,7 +207,7 @@ const createTask = () => {
 
 // index definido no botão gerado pelo script
 
-const deleteTask = index => {
+function deleteTask(index) {
 	const newArray = todoApp.tasks.filter(({id}) => {
 		return !(id === index)
 	})
@@ -208,16 +216,22 @@ const deleteTask = index => {
 	update()
 }
 
-const clearAll = () => {
+function clearAll() {
 	todoApp.tasks = []
 	todoApp.currentId = 0
 	update()
 }
 
+function changePending(inputRadioEl, ID) {
+	const task = todoApp.tasks.filter(({id}) => id === ID)[0]
+	task.pending = !inputRadioEl.checked
+	updateLocalStorage()
+}
+
 
 // inicializador
 
-const init = () => {
+function init() {
 	getLocalStorage()
 	checkOrder()
 	addTasksAndInfoInToDOM()
