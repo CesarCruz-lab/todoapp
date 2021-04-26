@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css" type="text/css" media="all" />
+		<title></title>
+	</head>
+	<body>
+		<section class="wrapper">
+			<header>Todo App</header>
+			
+			<div class="input-field">
+				<input
+					type="text"
+					id="text-box"
+					placeholder="Your new task"
+				/>
+				<button class="btn btn-new-task">
+					<img class="icon" src="img/plus.svg" alt="icon" />
+				</button>
+			</div>
+			<div class="order">
+				<label class="order-option">
+					<input 
+						type="radio"
+						name="radio"
+						checked=""
+						id="reverse"/>
+					<span class="order-view">Newest</span>
+				</label>
+				<label class="order-option">
+					<input
+						type="radio"
+						name="radio"
+						id="normal"
+					/>
+					<span class="order-view">Oldest</span>
+				</label>
+			</div>
+			
+			<ul class="todolist"></ul>
+			
+			<footer>
+				<span class="info">
+					You have <span class="amt">1</span> pending tasks
+				</span>
+				<button class="btn btn-clear-all">Clear All</button>
+			</footer>
+			
+		</section>
+		<script src="app.js"></script>
+		<script src="devtools.js"></script>
+	</body>
+</html>
