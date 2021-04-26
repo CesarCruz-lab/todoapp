@@ -9,6 +9,7 @@ body {
 	height: 100vh;
 	min-height: min-content;
 	background: linear-gradient(15deg, #6f3dc5, #6f3dc5bb);
+	font-family: Monospace, Sans-Serif;
 }
 
 .wrapper {
@@ -46,7 +47,7 @@ header {
 
 #text-box {
 	padding: 5px;
-	border: 1px solid #82899faa;
+	border: 1px solid #82899f;
 	border-radius: 3px;
 	outline: none;
 }
@@ -57,6 +58,40 @@ header {
 	font-size: 14px;
 	font-weight: 300;
 }
+
+.todolist {
+	width: 100%;
+	max-height: 314px;
+	margin: 10px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.icon {
+	width: 15px;
+	filter: invert(1);
+}
+
+.todolist li {
+	position: relative;
+	list-style: none;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding: 10px;
+	color: #444;
+}
+
+
+.todolist li:nth-child(n + 2) {
+	border-top: 1px solid #d3d3d3;
+}
+
+.todolist li > div {
+	display: inline-block;
+}
+
+/* botões e data */
 
 .date {
 	font-size: 11px;
@@ -88,8 +123,9 @@ header {
 }
 
 .btn-clear-all {
-	background: #80899f;
-	box-shadow: 0 0 0 1px #80899f;
+	/* background: #80899f; */
+	background: #6f3dc5ee;
+	box-shadow: 0 0 0 1px #6f3dc5;
 }
 
 .btn-delete {
@@ -110,58 +146,44 @@ header {
 	opacity: 0.35 !important;
 }
 
-.todolist {
-	width: 100%;
-	max-height: 314px;
-	margin: 10px;
-	/* padding-top: 20px; */
-	overflow-x: hidden;
-	overflow-y: scroll;
+/* conteúdo */
+
+.content-box {
+	width: 90%;
 }
 
-.icon {
-	width: 15px;
-	filter: invert(1);
-}
-
-.todolist li {
-	position: relative;
-	list-style: none;
-	width: 100%;
-	padding: 10px;
-	color: #444;
-}
-
-
-.todolist li:nth-child(n + 2) {
-	border-top: 1px solid #d3d3d3;
-}
-
-.todolist li:hover .btn-delete {
+.content-box:hover .btn-delete {
 	right: -20px;
 	animation: view-button 250ms ease-in-out forwards;
-}
-
-@keyframes view-button {
-	from {
-		opacity: 0;
-	}
-	85% {
-		opacity: 0.5;
-	}
-	
-	90% {
-		opacity: 1;
-	}
-	to {
-		opacity: 1;
-	}
 }
 
 .content {
 	display: block;
 	max-width: 100%;
 	overflow: scroll;
+}
+
+.check {
+	margin-right: 10px;
+	padding: 7px;
+	border: 2px solid #fff;
+	border-radius: 3px;
+	box-shadow: 0 0 0 1px #3377ee;
+	background: transparent;
+}
+
+input[name='task'] {
+	display: none;
+}
+
+input[name='task']:checked ~ .content-box span {
+	/* color: #a2a2a2; */
+	opacity: 0.46;
+	text-decoration: line-through;
+}
+
+input[name='task']:checked ~ .check {
+	background: #3377ee;
 }
 
 footer {
@@ -207,4 +229,20 @@ input[name="radio"] {
 input[name="radio"]:checked ~ .order-view {
 	border-bottom: 1px solid #6f3dc5cc;
 	color: #6f3dc5cc;
+}
+
+@keyframes view-button {
+	from {
+		opacity: 0;
+	}
+	85% {
+		opacity: 0.5;
+	}
+	
+	90% {
+		opacity: 1;
+	}
+	to {
+		opacity: 1;
+	}
 }
